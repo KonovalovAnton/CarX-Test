@@ -3,9 +3,6 @@ using System.Collections;
 
 public class SimpleTower : AbstractTower
 {
-    [SerializeField]
-    Transform spawnPoint;
-
     public override bool Update()
     {
         if(base.Update())

@@ -5,9 +5,15 @@ public class CannonProjectile : MonoBehaviour {
 	public float m_speed = 0.2f;
 	public int m_damage = 10;
 
-	void Update () {
-		var translation = transform.forward * m_speed;
-		transform.Translate (translation);
+    public Vector3 direction;
+
+	void Update ()
+    {
+        if(direction != null)
+        {
+		    var translation =  direction * m_speed;
+		    transform.Translate (translation);
+        }
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -16,9 +22,10 @@ public class CannonProjectile : MonoBehaviour {
 			return;
 
 		monster.m_hp -= m_damage;
-		if (monster.m_hp <= 0) {
-			Destroy (monster.gameObject);
+		if (monster.m_hp <= 0)
+        {
+            monster.TriggerDeath();
 		}
-		Destroy (gameObject);
+        gameObject.GetComponent<PoolInstance>().Remove();
 	}
 }

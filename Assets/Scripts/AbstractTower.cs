@@ -8,6 +8,9 @@ public class AbstractTower : MonoBehaviour {
     protected GameObject m_projectilePrefab;
 
     [SerializeField]
+    protected Transform spawnPoint;
+
+    [SerializeField]
     protected float m_shootInterval = 0.5f;
 
     [SerializeField]
@@ -19,12 +22,23 @@ public class AbstractTower : MonoBehaviour {
 
     protected List<Monster> monsterList = new List<Monster>();
 
+    public static System.Action<Monster> OnMonsterDeadEvent;
+
     private void Start()
     {
         bulletPool = gameObject.AddComponent<ObjectPool>();
         SphereCollider sc = gameObject.AddComponent<SphereCollider>();
         sc.isTrigger = true;
         sc.radius = m_range;
+        OnMonsterDeadEvent += OnMonsterDead;
+    }
+
+    private void OnMonsterDead(Monster m)
+    {
+        if (monsterList.Contains(m))
+        {
+            monsterList.Remove(m);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

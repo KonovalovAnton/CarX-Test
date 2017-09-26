@@ -21,8 +21,9 @@ public class Monster : MonoBehaviour
 		if (m_moveTarget == null)
 			return;
 		
-		if (Vector3.Distance (transform.position, m_moveTarget.transform.position) <= m_reachDistance) {
-            GetComponent<PoolInstance>().Remove();
+		if (Vector3.Distance (transform.position, m_moveTarget.transform.position) <= m_reachDistance)
+        {
+            TriggerDeath();
 			return;
 		}
 
@@ -32,4 +33,11 @@ public class Monster : MonoBehaviour
 		}
 		transform.Translate (translation);
 	}
+
+    public void TriggerDeath()
+    {
+        GetComponent<PoolInstance>().Remove();
+        m_hp = m_maxHP;
+        AbstractTower.OnMonsterDeadEvent(this);
+    }
 }

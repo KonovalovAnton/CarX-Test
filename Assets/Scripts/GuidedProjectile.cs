@@ -31,7 +31,7 @@ public class GuidedProjectile : MonoBehaviour
 		monster.m_hp -= m_damage;
 		if (monster.m_hp <= 0)
         {
-            monster.gameObject.GetComponent<PoolInstance>().Remove();
+            monster.TriggerDeath();
 		}
         GetComponent<PoolInstance>().Remove();
 	}

@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebddef33c1146ee4dbee2a0f72098ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectilePrefab: {fileID: 121420, guid: 83b1bef18dd7ed947ae8f4d857327102, type: 2}
+  m_projectilePrefab: {fileID: 194270}
+  spawnPoint: {fileID: 468124}
   m_shootInterval: 1
   m_range: 10
-  spawnPoint: {fileID: 468124}
