@@ -5,6 +5,12 @@ public class CannonTower : AbstractTower
 {
 	private float m_lastShotTime = -0.5f;
 
+    [SerializeField]
+    Transform yaw;
+
+    [SerializeField]
+    Transform pitch;
+
     Vector3 PredictPosition(Monster target)
     {        
         Vector3 monsterPosition = target.transform.position;
@@ -35,7 +41,13 @@ public class CannonTower : AbstractTower
             if(target != null)
             {
                 var obj = Shoot(spawnPoint.position);
-                obj.GetComponent<CannonProjectile>().direction = (PredictPosition(target) - spawnPoint.position).normalized;
+                Vector3 forward = (PredictPosition(target) - spawnPoint.position).normalized;
+                obj.GetComponent<CannonProjectile>().direction = forward;
+
+                Debug.Log(pitch.forward);
+                Debug.Log(forward);
+                yaw.localRotation = Quaternion.Euler(0, Mathf.Atan2(forward.x,forward.z) / Mathf.PI * 180, 0);
+                pitch.localRotation = Quaternion.Euler(-Mathf.Atan2(forward.y, forward.z) / Mathf.PI * 180, 0, 0);
             }
         }
         return true;

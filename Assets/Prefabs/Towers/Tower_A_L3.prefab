@@ -408,7 +408,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 4914069794973118}
   m_shootInterval: 2
   m_range: 10
-  m_shootPoint: {fileID: 4914069794973118}
+  yaw: {fileID: 4605382368511014}
+  pitch: {fileID: 4743089533988114}
 --- !u!136 &136134080859966422
 CapsuleCollider:
   m_ObjectHideFlags: 1
