@@ -10,39 +10,77 @@ public class AbstractTower : MonoBehaviour {
     [SerializeField]
     protected float m_shootInterval = 0.5f;
 
+    [SerializeField]
+    protected float m_range = 4f;
+
     protected float lastShotTime;
 
-    protected List<Monster> monsterList;
+    private ObjectPool bulletPool;
 
-    private AbstractTower()
-    {
-        monsterList = new List<Monster>();
-    }
+    protected List<Monster> monsterList = new List<Monster>();
 
     private void Start()
     {
-        gameObject.AddComponent<ObjectPool>();
+        bulletPool = gameObject.AddComponent<ObjectPool>();
+        SphereCollider sc = gameObject.AddComponent<SphereCollider>();
+        sc.isTrigger = true;
+        sc.radius = m_range;
     }
 
-    public virtual void UpdateMonsterList() { }
+    private void OnTriggerEnter(Collider other)
+    {
+        Monster m = other.GetComponent<Monster>();
+        if(m != null)
+        {
+            monsterList.Add(m);
+        }
+    }
 
-    public virtual void SelectTarget() { }
+    private void OnTriggerExit(Collider other)
+    {
+        Monster m = other.GetComponent<Monster>();
+        if (m != null)
+        {
+            monsterList.Remove(m);
+        }
+    }
 
-    public virtual void Shoot(Monster target)
+    public virtual Monster SelectTarget()
+    {
+        Monster target = null;
+        float range = float.MaxValue;
+
+        foreach (var item in monsterList)
+        {
+            float r = Vector3.Distance(item.transform.position, transform.position);
+            if (r < range)
+            {
+                range = r;
+                target = item;
+            }
+        }
+
+        return target;
+    }
+
+    public virtual GameObject Shoot(Vector3 pos)
     {
         lastShotTime = Time.time;
+        return bulletPool.Spawn(m_projectilePrefab, pos);
     }
 
-    public virtual void Update()
+    public virtual bool Update()
     {
         if(m_projectilePrefab == null)
         {
-            return;
+            return false;
         }
 
         if(Time.time - lastShotTime < m_shootInterval)
         {
-            return;
+            return false;
         }
+
+        return true;
     }
 }

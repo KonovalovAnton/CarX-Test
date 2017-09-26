@@ -8,8 +8,9 @@ public class GuidedProjectile : MonoBehaviour {
 
 	void Update () {
 		if (m_target == null) {
-			Destroy (gameObject);
-			return;
+            //Destroy (gameObject);
+            GetComponent<PoolInstance>().Remove();
+            return;
 		}
 
 		var translation = m_target.transform.position - transform.position;
@@ -28,6 +29,7 @@ public class GuidedProjectile : MonoBehaviour {
 		if (monster.m_hp <= 0) {
 			Destroy (monster.gameObject);
 		}
-		Destroy (gameObject);
+        GetComponent<PoolInstance>().Remove();
+		//Destroy (gameObject);
 	}
 }
