@@ -24,7 +24,7 @@ public class CannonTower : AbstractTower
         float D = b * b - 4 * a * c;
         float predictionL = (-b + Mathf.Sqrt(D)) / (2 * a);
 
-        return monsterPosition + predictionL * monsterMovementDirection;
+        return monsterPosition + predictionL * monsterVelocity / bulletVelocity * monsterMovementDirection;
     }
 
 	public override bool Update ()
