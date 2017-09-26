@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolInstance : MonoBehaviour {
-
+public class PoolInstance : MonoBehaviour
+{
     ObjectPool creator;
 
     public void SetCreator(ObjectPool op)

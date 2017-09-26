@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour {
-
+public class ObjectPool : MonoBehaviour
+{
     GameObject rootToSpawn;
 
-    private Stack<PoolInstance> objPool;
+    private Stack<PoolInstance> objPool = new Stack<PoolInstance>();
 
     public GameObject Spawn(GameObject go, Vector3 pos)
     {
@@ -34,8 +34,8 @@ public class ObjectPool : MonoBehaviour {
         objPool.Push(instance);
     }
 
-    void Start () {
-        objPool = new Stack<PoolInstance>();
+    void Awake()
+    {
         rootToSpawn = new GameObject("Object pool");
         rootToSpawn.transform.parent = transform;
     }
